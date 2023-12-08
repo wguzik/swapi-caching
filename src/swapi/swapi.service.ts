@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from "@nestjs/common";
 import { CacheService } from "src/cache/cache.service";
 import { ResourceType } from "./types";
 import dayjs from "dayjs";
@@ -17,6 +21,7 @@ export class SwapiService {
 
     const slug = `${resource}/?page=${page}`;
     const content = await this.sendQuery(slug);
+    if (!content) throw new NotFoundException("Resource not found");
 
     this.saveToCache("page", resource, { page, slug, content });
 
@@ -32,19 +37,24 @@ export class SwapiService {
 
     const slug = `${resource}/${id}`;
     const content = await this.sendQuery(slug);
+    if (!content) throw new NotFoundException("Resource not found");
 
     this.saveToCache("single", resource, { id, slug, content });
 
     return content;
   }
 
-  private async sendQuery(
-    queryString: string
-  ): Promise<Record<PropertyKey, any>> {
+  async sendQuery(queryString: string): Promise<Record<PropertyKey, any>> {
     const URL = process.env.BASE_URL ?? "https://swapi.dev/api/";
 
-    const result = await fetch(`${URL}${queryString}`);
-    return result.json();
+    try {
+      const result = await fetch(`${URL}${queryString}`);
+      if (result.status === 404) return undefined;
+      return result.json();
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException("Unable to fetch data from SWAPI");
+    }
   }
 
   private async saveToCache(
@@ -57,7 +67,7 @@ export class SwapiService {
         id: amount === "single" ? payload.id : undefined,
         page: amount === "page" ? payload.page : undefined,
         slug: payload.slug,
-        content: payload,
+        content: payload.content,
       })
       .catch((e) => console.error(e));
   }

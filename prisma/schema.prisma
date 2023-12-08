@@ -8,12 +8,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model PeoplePages {
-  page_id   Int      @id
-  slug      String   @unique
-  names     String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum Statistic {
+  opening_crawls
+  people
+}
+
+model Stats {
+  id        Int       @id @default(autoincrement())
+  type      Statistic @unique
+  content   String[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model FilmsPages {

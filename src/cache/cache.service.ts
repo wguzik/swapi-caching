@@ -14,26 +14,31 @@ export class CacheService {
         case "films":
           return await this.prisma.films.findUnique({
             where: { id: payload.id },
+            select: { content: true, updatedAt: true },
           });
 
         case "planets":
           return await this.prisma.planets.findUnique({
             where: { id: payload.id },
+            select: { content: true, updatedAt: true },
           });
 
         case "vehicles":
           return await this.prisma.vehicles.findUnique({
             where: { id: payload.id },
+            select: { content: true, updatedAt: true },
           });
 
         case "starships":
           return await this.prisma.starships.findUnique({
             where: { id: payload.id },
+            select: { content: true, updatedAt: true },
           });
 
         case "species":
           return await this.prisma.species.findUnique({
             where: { id: payload.id },
+            select: { content: true, updatedAt: true },
           });
       }
     }
@@ -43,26 +48,31 @@ export class CacheService {
         case "films":
           return await this.prisma.filmsPages.findUnique({
             where: { page_id: payload.page },
+            select: { content: true, updatedAt: true },
           });
 
         case "planets":
           return await this.prisma.planetsPages.findUnique({
             where: { page_id: payload.page },
+            select: { content: true, updatedAt: true },
           });
 
         case "vehicles":
           return await this.prisma.vehiclesPages.findUnique({
             where: { page_id: payload.page },
+            select: { content: true, updatedAt: true },
           });
 
         case "starships":
           return await this.prisma.starshipsPages.findUnique({
             where: { page_id: payload.page },
+            select: { content: true, updatedAt: true },
           });
 
         case "species":
           return await this.prisma.speciesPages.findUnique({
             where: { page_id: payload.page },
+            select: { content: true, updatedAt: true },
           });
       }
     }

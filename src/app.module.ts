@@ -4,6 +4,7 @@ import { HealthCheckModule } from "./health-check/health-check.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SwapiModule } from "./swapi/swapi.module";
 import { CacheModule } from './cache/cache.module';
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CacheModule } from './cache/cache.module';
     HealthCheckModule,
     SwapiModule,
     CacheModule,
+    StatisticsModule,
   ],
 })
 export class AppModule {}

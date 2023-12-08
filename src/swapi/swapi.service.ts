@@ -1,26 +1,22 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CacheService } from "src/cache/cache.service";
 import { ResourceType } from "./types";
 import dayjs from "dayjs";
+import { QueryService } from "src/query/query.service";
 
 @Injectable()
 export class SwapiService {
-  constructor(private readonly cacheService: CacheService) {}
+  constructor(
+    private readonly cacheService: CacheService,
+    private readonly queryService: QueryService
+  ) {}
 
   async getPageResource(resource: ResourceType, page = 1) {
-    const cached = await this.cacheService.retreiveFromCache(resource, {
-      page,
-    });
-
-    const isCached = this.determineCacheStatus(cached);
-    if (isCached) return cached.content;
+    const isCached = await this.determineIfCacheIsUpToDate(resource, { page });
+    if (isCached) return isCached.content;
 
     const slug = `${resource}/?page=${page}`;
-    const content = await this.sendQuery(slug);
+    const content = await this.queryService.sendQuery(slug);
     if (!content) throw new NotFoundException("Resource not found");
 
     this.saveToCache("page", resource, { page, slug, content });
@@ -29,32 +25,16 @@ export class SwapiService {
   }
 
   async getItemResource(resource: ResourceType, id: number) {
-    const cached = await this.cacheService.retreiveFromCache(resource, {
-      id,
-    });
-    const isCached = this.determineCacheStatus(cached);
-    if (isCached) return cached.content;
+    const isCached = await this.determineIfCacheIsUpToDate(resource, { id });
+    if (isCached) return isCached.content;
 
     const slug = `${resource}/${id}`;
-    const content = await this.sendQuery(slug);
+    const content = await this.queryService.sendQuery(slug);
     if (!content) throw new NotFoundException("Resource not found");
 
     this.saveToCache("single", resource, { id, slug, content });
 
     return content;
-  }
-
-  async sendQuery(queryString: string): Promise<Record<PropertyKey, any>> {
-    const URL = process.env.BASE_URL ?? "https://swapi.dev/api/";
-
-    try {
-      const result = await fetch(`${URL}${queryString}`);
-      if (result.status === 404) return undefined;
-      return result.json();
-    } catch (e) {
-      console.error(e);
-      throw new InternalServerErrorException("Unable to fetch data from SWAPI");
-    }
   }
 
   private async saveToCache(
@@ -72,16 +52,20 @@ export class SwapiService {
       .catch((e) => console.error(e));
   }
 
-  private determineCacheStatus(
-    cached: Awaited<
-      ReturnType<typeof this.cacheService.retreiveFromCache>
-    > | null
+  private async determineIfCacheIsUpToDate(
+    resource: ResourceType,
+    identifier: { page?: number; id?: number }
   ) {
-    if (cached === null) return false;
+    const cached = await this.cacheService.retreiveFromCache(resource, {
+      id: identifier.id,
+      page: identifier.page,
+    });
+    if (cached === null) return false as const;
 
     const twentyFourHoursAgo = dayjs().subtract(24, "hours");
     const lastCachedAt = dayjs(cached.updatedAt);
+    if (lastCachedAt.isAfter(twentyFourHoursAgo)) return cached;
 
-    return lastCachedAt.isAfter(twentyFourHoursAgo);
+    return false;
   }
 }

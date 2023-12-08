@@ -1,17 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import dayjs from "dayjs";
 import { PrismaService } from "src/prisma/prisma.service";
-import { SwapiService } from "src/swapi/swapi.service";
 import {
   countOccurrences,
   countWordOccurrences,
   deleteDotsAndCommas,
   findMostFrequentOccurances,
 } from "./helpers";
+import { QueryService } from "src/query/query.service";
 @Injectable()
 export class StatisticsService {
   constructor(
-    private readonly swapiService: SwapiService,
+    private readonly queryService: QueryService,
     private readonly prisma: PrismaService
   ) {}
 
@@ -106,7 +106,7 @@ export class StatisticsService {
   }
 
   private async getAllFilms() {
-    const films = await this.swapiService.sendQuery("films/");
+    const films = await this.queryService.sendQuery("films/");
     return films.results;
   }
 
@@ -115,7 +115,7 @@ export class StatisticsService {
 
     const results = await Promise.all(
       Array.from({ length: pages }, (_, i) =>
-        this.swapiService.sendQuery(`people/?page=${i + 1}`)
+        this.queryService.sendQuery(`people/?page=${i + 1}`)
       )
     );
 

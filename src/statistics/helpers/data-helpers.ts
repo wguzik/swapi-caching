@@ -43,6 +43,7 @@ export function findMostFrequentOccurances(
 export function countWordOccurrences(
   inputString: string
 ): Record<string, number> {
+  if (!inputString) return {};
   const words = inputString.split(/\s+/);
   const wordCountMap = new Map<string, number>();
 

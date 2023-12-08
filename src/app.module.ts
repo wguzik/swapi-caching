@@ -5,6 +5,7 @@ import { PrismaModule } from "./prisma/prisma.module";
 import { SwapiModule } from "./swapi/swapi.module";
 import { CacheModule } from './cache/cache.module';
 import { StatisticsModule } from './statistics/statistics.module';
+import { QueryModule } from './query/query.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     SwapiModule,
     CacheModule,
     StatisticsModule,
+    QueryModule,
   ],
 })
 export class AppModule {}

@@ -1,0 +1,102 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["linux-musl", "native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PeoplePages {
+  page_id   Int      @id
+  slug      String   @unique
+  names     String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FilmsPages {
+  page_id   Int      @id
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Films {
+  id        Int      @id
+  title     String   @unique
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SpeciesPages {
+  page_id   Int      @id
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Species {
+  id        Int      @id
+  name      String   @unique
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VehiclesPages {
+  page_id   Int      @id
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vehicles {
+  id        Int      @id
+  name      String   @unique
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model StarshipsPages {
+  page_id   Int      @id
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Starships {
+  id        Int      @id
+  name      String   @unique
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PlanetsPages {
+  page_id   Int      @id
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Planets {
+  id        Int      @id
+  name      String   @unique
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

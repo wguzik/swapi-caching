@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, UseGuards } from "@nestjs/common";
+import { Controller, Get, Put, UseGuards } from "@nestjs/common";
 import { StatisticsService } from "./statistics.service";
 import { StatisticsGuard } from "./guards";
 
@@ -7,7 +7,7 @@ export class StatisticsController {
   constructor(private readonly statsService: StatisticsService) {}
 
   @UseGuards(StatisticsGuard)
-  @Patch("update")
+  @Put("update")
   async updateStatsCache() {
     return this.statsService.updateStatsCache();
   }

@@ -4,6 +4,7 @@
 
 - npm
 - docker
+- valid env file (for testing purposes, you may just rename the `.env.example` file to `.env`)
 
 ## Run project
 

@@ -5,7 +5,7 @@ export function countOccurrences(
   let countObject = arr.reduce((acc, curr) => {
     acc[curr] = 0;
     return acc;
-  }, {});
+  }, {} as { [key: string]: number });
 
   for (const key in countObject) {
     if (countObject.hasOwnProperty(key)) {

@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { ResourceType } from "src/swapi/types";
+import { ResourceType } from "../swapi/types";
 import type { CachePayload, CacheQuery } from "./types";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import dayjs from "dayjs";
 
 @Injectable()

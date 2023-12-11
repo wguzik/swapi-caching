@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { CacheService } from "src/cache/cache.service";
+import { CacheService } from "../cache/cache.service";
 import { ResourceType } from "./types";
 import dayjs from "dayjs";
-import { QueryService } from "src/query/query.service";
+import { QueryService } from "../query/query.service";
 
 @Injectable()
 export class SwapiService {

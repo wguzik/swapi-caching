@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import dayjs from "dayjs";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import {
   countOccurrences,
   countWordOccurrences,
   deleteDotsAndCommas,
   findMostFrequentOccurances,
 } from "./helpers";
-import { QueryService } from "src/query/query.service";
+import { QueryService } from "../query/query.service";
 @Injectable()
 export class StatisticsService {
   constructor(

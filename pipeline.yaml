@@ -20,11 +20,6 @@ jobs:
   displayName: Build
   steps:
 
-  - task: CmdLine@2
-    displayName: 'List files'
-    inputs:
-      script: mv $(Build.SourcesDirectory)/.env.example $(Build.SourcesDirectory)/.env
-  
   - task: DockerCompose@0
     displayName: Run Docker-compose-up
     inputs:
@@ -40,7 +35,7 @@ jobs:
   - task: CmdLine@2
     displayName: 'ls'
     inputs:
-      script: ls $(Build.SourcesDirectory)
+      script: ls -l $(Build.SourcesDirectory)
 
   - task: CmdLine@2
     displayName: 'Move around'

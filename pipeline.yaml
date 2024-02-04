@@ -99,6 +99,6 @@ jobs:
   - task: CmdLine@2
     displayName: Create Work Item
     inputs:
-      script: 'az boards work-item create --title "Build $(Build.BuildNumber) failed" --type "Issue" --assigned-to ${{parameters.AssignedToUser}}  --description "Build failure.<div>Pipeline Name - $(Build.DefinitionName)"'
+      script: 'az boards work-item create --title "Build $(Build.BuildNumber) failed" --type "Issue"  --description "Build failure.<div>Pipeline Name - $(Build.DefinitionName)"'
     env:
       AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)

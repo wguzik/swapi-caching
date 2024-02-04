@@ -4,6 +4,9 @@ name: "$(Date:yyyy)-$(Date:MM)-$(Rev:r)"
 
 trigger:
   batch: true
+  pr:
+  - main
+  - develop
   branches:
     include:
     - main

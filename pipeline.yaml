@@ -62,7 +62,7 @@ jobs:
     displayName: Build
     inputs:
       cwd: '$(Build.SourcesDirectory)/.'
-      command: build
+      command: run build
 
   - script: |
       npm run test e2e

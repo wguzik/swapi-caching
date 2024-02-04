@@ -58,12 +58,12 @@ jobs:
 #      cwd: '$(Build.SourcesDirectory)/.'
 #      command: update
 #
-  - task: Npm@0
-    displayName: Build
-    inputs:
-      cwd: '$(Build.SourcesDirectory)/.'
-      command: run
-      arguments: build
+#  - task: Npm@0
+#    displayName: Build
+#    inputs:
+#      cwd: '$(Build.SourcesDirectory)/.'
+#      command: run
+#      arguments: build
 
   - script: |
       npm run test e2e

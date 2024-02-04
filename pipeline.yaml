@@ -52,6 +52,26 @@ jobs:
       version: '20.x'
       checkLatest: true
 
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      command: 'install'
+      workingDir: '$(Build.SourcesDirectory)/'
+
+  - task: Npm@1
+    displayName: npm run build
+    inputs:
+      command: 'custom'
+      workingDir: '$(Build.SourcesDirectory)/'
+      customCommand: 'run build'
+
+  - task: Npm@1
+    displayName: test
+    inputs:
+      command: 'custom'
+      workingDir: '$(Build.SourcesDirectory)/'
+      customCommand: 'run test e2e'
+
 #  - task: Npm@0
 #    displayName: Run NPM Update for NestJS
 #    inputs:
@@ -64,7 +84,7 @@ jobs:
 #      cwd: '$(Build.SourcesDirectory)/.'
 #      command: run
 #      arguments: build
-
-  - script: |
-      npm run test e2e
-    displayName: 'run test'
+#
+#  - script: |
+#      npm run test e2e
+#    displayName: 'run test'

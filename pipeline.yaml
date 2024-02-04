@@ -19,6 +19,7 @@ pool:
 
 jobs:
 - job:
+  name: build
   displayName: Build
   steps:
 

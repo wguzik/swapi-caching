@@ -1,5 +1,7 @@
 # Swapi-caching
 
+all credits to https://github.com/matt-jb/
+
 ## Prereqs
 
 - npm

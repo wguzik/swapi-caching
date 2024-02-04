@@ -3,8 +3,7 @@
 name: "$(Date:yyyy)-$(Date:MM)-$(Rev:r)"
 
 pr:
-  - main
-  - develop
+- main
 
 trigger:
   batch: true

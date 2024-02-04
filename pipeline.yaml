@@ -18,8 +18,7 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job:
-  name: build
+- job: build
   displayName: Build
   steps:
 

@@ -35,7 +35,13 @@ jobs:
   - task: CmdLine@2
     displayName: 'Curl'
     inputs:
-      script: curl localhost:3000/health
+      script: curl http://localhost:3000/health
+
+
+  - task: CmdLine@2
+    displayName: 'Curl'
+    inputs:
+      script: curl http://localhost:3000/health
   
   - task: UseNode@1
     inputs:
@@ -45,6 +51,17 @@ jobs:
   - task: Npm@0
     displayName: Run NPM Update for NestJS
     inputs:
-      cwd: '$(Build.SourcesDirectory)/ProjectName'
+      cwd: '$(Build.SourcesDirectory)/.'
       command: update
-  
+
+  - task: Npm@0
+    displayName: Build
+    inputs:
+      cwd: '$(Build.SourcesDirectory)/.'
+      command: build start
+
+  - task: Npm@0
+    displayName: run test
+    inputs:
+      cwd: '$(Build.SourcesDirectory)/.'
+      command: run test e2e

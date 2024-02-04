@@ -32,16 +32,10 @@ jobs:
       dockerComposeFile: $(Build.SourcesDirectory)/docker-compose.yaml
       dockerComposeCommand: 'up -d'
 
-  - task: CmdLine@2
-    displayName: 'Curl'
-    inputs:
-      script: curl http://localhost:3000/health
-
-
-  - task: CmdLine@2
-    displayName: 'Curl'
-    inputs:
-      script: curl http://localhost:3000/health
+#  - task: CmdLine@2
+#    displayName: 'Curl'
+#    inputs:
+#      script: curl http://localhost:3000/health
   
   - task: UseNode@1
     inputs:

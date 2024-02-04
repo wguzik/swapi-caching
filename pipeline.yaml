@@ -38,6 +38,11 @@ jobs:
 #      script: curl http://localhost:3000/health
 
   - task: CmdLine@2
+    displayName: 'ls'
+    inputs:
+      script: ls $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
     displayName: 'Curl'
     inputs:
       script: mv $(Build.SourcesDirectory)/.env.e2e $(Build.SourcesDirectory)/.env

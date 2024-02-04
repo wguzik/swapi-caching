@@ -43,9 +43,14 @@ jobs:
       script: ls $(Build.SourcesDirectory)
 
   - task: CmdLine@2
-    displayName: 'Curl'
+    displayName: 'Move around'
     inputs:
       script: mv $(Build.SourcesDirectory)/.env.e2e $(Build.SourcesDirectory)/.env
+
+  - task: CmdLine@2
+    displayName: 'Check env'
+    inputs:
+      script: cat $(Build.SourcesDirectory)/.env
   
   - task: UseNode@1
     inputs:

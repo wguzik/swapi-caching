@@ -2,6 +2,9 @@
 
 name: "$(Date:yyyy)-$(Date:MM)-$(Rev:r)"
 
+pr:
+- main
+
 trigger:
   batch: true
   branches:

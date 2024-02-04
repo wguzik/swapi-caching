@@ -62,10 +62,8 @@ jobs:
     displayName: Build
     inputs:
       cwd: '$(Build.SourcesDirectory)/.'
-      command: build start
+      command: build
 
-  - task: Npm@0
-    displayName: run test
-    inputs:
-      cwd: '$(Build.SourcesDirectory)/.'
-      command: run test e2e
+  - script: |
+      npm run test e2e
+    displayName: 'run test'

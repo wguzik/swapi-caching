@@ -2,11 +2,13 @@
 
 name: "$(Date:yyyy)-$(Date:MM)-$(Rev:r)"
 
-trigger:
-  batch: true
-  pr:
+pr:
   - main
   - develop
+
+trigger:
+  batch: true
+
   branches:
     include:
     - main

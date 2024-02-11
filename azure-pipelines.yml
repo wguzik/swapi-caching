@@ -91,3 +91,4 @@ jobs:
       script: 'az boards work-item create --title "Build $(Build.BuildNumber) failed" --type "Issue"  --description "Build failure.<div>Pipeline Name - $(Build.DefinitionName)"'
     env:
       AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
+

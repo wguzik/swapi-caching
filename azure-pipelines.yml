@@ -34,3 +34,60 @@ jobs:
       containerregistrytype: Container Registry
       dockerComposeFile: $(Build.SourcesDirectory)/docker-compose.yaml
       dockerComposeCommand: 'up -d'
+
+  - task: CmdLine@2
+    displayName: 'ls'
+    inputs:
+      script: ls -l $(Build.SourcesDirectory)
+
+  - task: CmdLine@2
+    displayName: 'Move .env file with e2e payload'
+    inputs:
+      script: mv $(Build.SourcesDirectory)/.env.e2e $(Build.SourcesDirectory)/.env
+
+  - task: CmdLine@2
+    displayName: 'Check .env file'
+    inputs:
+      script: cat $(Build.SourcesDirectory)/.env
+  
+  - task: UseNode@1
+    inputs:
+      version: '20.x'
+      checkLatest: true
+
+  - task: Npm@1
+    displayName: install dependencies
+    inputs:
+      command: 'install'
+      workingDir: '$(Build.SourcesDirectory)/'
+
+  - task: Npm@1
+    displayName: run test
+    inputs:
+      command: 'custom'
+      workingDir: '$(Build.SourcesDirectory)/'
+      customCommand: 'run test e2e'
+
+- job:
+  # https://blog.devgenius.io/create-work-item-on-pipeline-failure-in-azure-devops-yaml-pipeline-973bd175166
+  displayName: RaiseBug
+  dependsOn: Build
+  condition: failed()
+  steps:
+  - task: CmdLine@2
+    displayName: Install Azure DevOps Extension
+    inputs:
+      script: 'az extension add --name azure-devops'
+  
+  - task: CmdLine@2
+    displayName: Configure Default Settings
+    inputs:
+      script: |
+        az devops configure --defaults organization=$(System.CollectionUri) project=$(System.TeamProject)
+  
+  - task: CmdLine@2
+    displayName: Create Work Item
+    inputs:
+      script: 'az boards work-item create --title "Build $(Build.BuildNumber) failed" --type "Issue"  --description "Build failure.<div>Pipeline Name - $(Build.DefinitionName)"'
+    env:
+      AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)    

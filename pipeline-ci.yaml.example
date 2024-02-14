@@ -28,6 +28,11 @@ jobs:
     inputs:
       script: mv $(Build.SourcesDirectory)/.env.example $(Build.SourcesDirectory)/.env
 
+  - task: npmAuthenticate@0
+    inputs:
+      workingFile: .npmrc           
+      customEndpoint:        
+
   - task: DockerCompose@0
     displayName: Run Docker-compose-up
     inputs:

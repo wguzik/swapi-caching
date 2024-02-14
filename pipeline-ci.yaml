@@ -30,8 +30,8 @@ jobs:
 
   - task: npmAuthenticate@0
     inputs:
-      workingFile: .npmrc           
-      customEndpoint:        
+      workingFile: .npmrc
+      customEndpoint:
 
   - task: DockerCompose@0
     displayName: Run Docker-compose-up

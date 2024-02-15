@@ -81,7 +81,7 @@ jobs:
       dockerfile: $(Build.SourcesDirectory)/Dockerfile
       containerRegistry: acr-wg
       tags: |
-        $(tag)
+        today
 
 - job:
   # https://blog.devgenius.io/create-work-item-on-pipeline-failure-in-azure-devops-yaml-pipeline-973bd175166

@@ -1,4 +1,4 @@
-name: "$(Date:yyyy)-$(Date:MM)-$(Date:DD)-$(Rev:r)"
+name: "$(Date:yyyy)-$(Date:MM)-$(Rev:r)"
 
 pr:
 - main

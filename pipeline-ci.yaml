@@ -1,5 +1,4 @@
 name: "$(Date:yyyy)-$(Date:MM)-$(Rev:r)"
-tag: "$(Date:yyyy)-$(Date:MM)-$(Date:DD)-$(Date:hh)-$(Date:mm)"
 
 pr:
 - main

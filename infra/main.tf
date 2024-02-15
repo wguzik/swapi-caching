@@ -1,7 +1,5 @@
 locals {
-  postfix                       = "${var.project}-${var.environment}-${var.location}"
-  namespaces                    = ["monitoring", "nginx"]
-  kube_prometheus_stack_version = "56.6.2"
+  postfix = "${var.project}-${var.environment}-${var.location}"
 }
 
 module "rg" {
@@ -13,13 +11,27 @@ module "rg" {
   location    = var.location
 }
 
-module "vnet" {
-  source = "./modules/vnet"
+module "kv" {
+  source = "./modules/kv"
 
-  rg_name = module.rg.rg_name
-  postfix = local.postfix
-
+  rg_name     = module.rg.rg_name
+  project     = var.project
+  environment = var.environment
   depends_on = [
     module.rg
+  ]
+}
+
+module "acr" {
+  source = "./modules/acr"
+
+  rg_name     = module.rg.rg_name
+  project     = var.project
+  environment = var.environment
+  kv_id       = module.kv.kv_id
+
+  depends_on = [
+    module.rg,
+    module.kv
   ]
 }

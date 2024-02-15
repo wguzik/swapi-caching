@@ -82,7 +82,7 @@ jobs:
       dockerfile: $(Build.SourcesDirectory)/Dockerfile
       containerRegistry: swapi-caching
       tags: |
-        $(tag)
+        $(Build.BuildNumber)
 
 - job:
   # https://blog.devgenius.io/create-work-item-on-pipeline-failure-in-azure-devops-yaml-pipeline-973bd175166

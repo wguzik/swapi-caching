@@ -28,6 +28,12 @@ jobs:
     inputs:
       script: mv $(Build.SourcesDirectory)/.env.example $(Build.SourcesDirectory)/.env
 
+## Sekcja Artifacts i NPM
+#  - task: npmAuthenticate@0
+#    inputs:
+#      workingFile: .npmrc
+#      customEndpoint:
+
   - task: DockerCompose@0
     displayName: Run Docker-compose-up
     inputs:
@@ -67,6 +73,18 @@ jobs:
       command: 'custom'
       workingDir: '$(Build.SourcesDirectory)/'
       customCommand: 'run test e2e'
+
+## Sekcja Docker push
+#  - task: Docker@2
+#    displayName: Build and push an image to container registry
+#    inputs:
+#      command: buildAndPush
+#      repository: swapi-caching # efektywnie nazwa aplikacji
+#      dockerfile: $(Build.SourcesDirectory)/Dockerfile # wskazanie Dockerfile
+#      containerRegistry: acr-wg #nazwa Service Connection
+#      tags: |
+#        $(Build.BuildNumber) # tag, może być kilka
+#        latest
 
 - job:
   # https://blog.devgenius.io/create-work-item-on-pipeline-failure-in-azure-devops-yaml-pipeline-973bd175166

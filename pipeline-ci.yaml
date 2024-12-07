@@ -16,7 +16,7 @@ trigger:
     - prisma/*
 
 pool:
-  vmImage: ubuntu-latest
+  name: 'default'
 
 jobs:
 - job: build
